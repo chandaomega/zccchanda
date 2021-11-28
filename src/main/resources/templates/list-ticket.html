@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zendesk Ticket Viewer</title>
+  <style type="text/css">
+
+    /* Housekeeping */
+    html{
+      font:0.75em/1.5 sans-serif;
+      color:#333;
+      background-color:#fff;
+      padding:1em;
+    }
+
+    /* Tables */
+    table{
+      width:100%;
+      margin-bottom:1em;
+      border-collapse: collapse;
+    }
+    th{
+      font-weight:bold;
+      background-color:#ddd;
+    }
+    th,
+    td{
+      padding:0.5em;
+      border:1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div th:if="${not #strings.isEmpty(errorMsg)}">
+  <div th:text="${errorMsg}"></div>
+  <a href="/tickets">Tickets Dashboard</a>
+</div>
+<div th:if="${ticket == 'undefined' && #strings.isEmpty(errorMsg)}"> Unable to display ticket information
+  <a href="/tickets">Tickets Dashboard</a>
+</div>
+<div th:if="${ticket != 'undefined'}">
+<table>
+  <tbody>
+
+  <tr>
+    <td>Ticket #</td>
+    <td th:text="${ticket.ticketId}"></td>
+  </tr>
+  <tr>
+    <td>Subject</td>
+    <td th:text="${ticket.subject}"></td>
+  </tr>
+
+  <tr>
+    <td>Description</td>
+    <td th:text="${ticket.description}"></td>
+  </tr>
+
+  <tr>
+    <td>Priority</td>
+    <td th:text="${ticket.priority}"></td>
+  </tr>
+
+  <tr>
+    <td>Status</td>
+    <td th:text="${ticket.status}"></td>
+  </tr>
+
+  </tbody>
+</table>
+<div id="back">
+  <a href="javascript:history.back()">Go Back</a>
+</div>
+</div>
+</body>
+</html>

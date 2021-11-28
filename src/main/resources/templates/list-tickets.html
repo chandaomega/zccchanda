@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Zendesk Ticket Viewer</title>
+  <style type="text/css">
+
+    /* Housekeeping */
+    html{
+      font:0.75em/1.5 sans-serif;
+      color:#333;
+      background-color:#fff;
+      padding:1em;
+    }
+
+    /* Tables */
+    table{
+      width:100%;
+      margin-bottom:1em;
+      border-collapse: collapse;
+    }
+    th{
+      font-weight:bold;
+      background-color:#ddd;
+    }
+    th,
+    td{
+      padding:0.5em;
+      border:1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div th:if="${not #strings.isEmpty(errorMsg)}">
+  <div th:text="${errorMsg}"></div>
+  <a href="/tickets">Tickets Dashboard</a>
+</div>
+
+<div th:if="${tickets.size == 0 && #strings.isEmpty(errorMsg)}">
+  <div>There are no tickets to display</div>
+</div>
+<div th:if="${tickets.size != 0}">
+<table>
+  <thead>
+  <tr>
+    <th>Ticket #</th>
+    <th>Subject</th>
+    <th> More Details</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr th:each="ticket, stats: ${tickets}">
+    <td th:text="${ticket.ticketId}"></td>
+    <td th:text="${ticket.subject}"></td>
+    <td><a th:href="@{'/tickets/' + ${ticket.ticketId}}">view</a></td>
+  </tr>
+
+  </tbody>
+</table>
+<div id="pagination">
+
+  <div th:if="${hasMore}">
+    <a th:href="@{'/tickets?b=1&page=' + ${beforeCursor}}">Previous</a>
+    <a th:href="@{'/tickets?b=0&page=' + ${nextCursor}}">Next</a>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
